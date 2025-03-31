@@ -12,39 +12,68 @@
   </head>
   <body>
     <div class="container" id="container">
+      <!-- Forgot Password Form -->
       <div class="form-container sign-up">
         <form id="forgotPasswordForm">
           <h1>Forgot Password</h1>
-          <input type="email" placeholder="Email" />
-          <button>Forgot Password</button>
+          <input
+            type="email"
+            id="forgot-email"
+            name="forgot-email"
+            placeholder="Enter your email"
+            required
+          />
+          <button type="submit">Reset Password</button>
         </form>
       </div>
+
+      <!-- Sign In Form -->
       <div class="form-container sign-in">
         <form id="signInForm">
           <h1>Sign In</h1>
-          <input type="email" placeholder="Email" />
-          <input type="password" placeholder="Password" />
-          <button>Sign In</button>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            placeholder="Enter your email"
+            required
+          />
+
+          <div class="password-container">
+            <input
+              type="password"
+              id="password"
+              name="password"
+              placeholder="Enter your password"
+              required
+            />
+            <span class="password-toggle" id="password-toggle">
+              <i class="fas fa-eye"></i>
+            </span>
+          </div>
+
+          <a href="#" id="forgotPasswordLink">Forgot Password?</a>
+          <button type="submit">Sign In</button>
         </form>
       </div>
+
+      <!-- Toggle Container -->
       <div class="toggle-container">
         <div class="toggle">
           <div class="toggle-panel toggle-left">
             <h1>Welcome Back!</h1>
-            <p>Enter your personal details to use all of site features</p>
+            <p>Enter your personal details to use all site features</p>
             <button class="hidden" id="login">Sign In</button>
           </div>
           <div class="toggle-panel toggle-right">
-            <h1>Forgot password</h1>
-            <p>
-              If you forgot your password, click on 'Forgot Password?' to reset
-              it.
-            </p>
+            <h1>Forgot password?</h1>
+            <p>If you forgot your password, click below to reset it.</p>
             <button class="hidden" id="register">Forgot Password</button>
           </div>
         </div>
       </div>
     </div>
+
     <script src="/js/login.js"></script>
   </body>
 </html>

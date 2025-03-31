@@ -1,47 +1,63 @@
 const express = require("express");
-const mysql = require("mysql");
 const bcrypt = require("bcrypt");
 const con = require("../config/db"); // Require db.js
 
 const router = express.Router();
 
+// 🚀 API Đăng nhập
 router.post("/login", async (req, res) => {
-  const { email, password } = req.body;
+  try {
+    const { email, password } = req.body;
 
-  con.query(
-    "SELECT * FROM Users WHERE Email = ?",
-    [email],
-    async (err, results) => {
-      if (err) {
-        console.error("Lỗi truy vấn:", err);
-        return res.status(500).json({ message: "Lỗi server" });
-      }
-      console.log("Kết quả truy vấn:", results); // Kiểm tra kết quả truy vấn
+    if (!email || !password) {
+      return res
+        .status(400)
+        .json({ message: "Vui lòng nhập email và mật khẩu" });
+    }
 
-      if (results.length === 0) {
-        return res
-          .status(401)
-          .json({ message: "Email hoặc mật khẩu không đúng" });
-      }
+    // 🛠 Kiểm tra email trong DB
+    con.query(
+      "SELECT EmpID, PasswordHash FROM Users WHERE Email = ?",
+      [email],
+      async (err, results) => {
+        if (err) {
+          console.error("❌ Lỗi truy vấn MySQL:", err);
+          return res.status(500).json({ message: "Lỗi server" });
+        }
 
-      const user = results[0];
-      const passwordMatch = await bcrypt.compare(password, user.PasswordHash);
+        if (results.length === 0) {
+          console.warn("⚠️ Email không tồn tại:", email);
+          return res.status(401).json({ message: "Email không tồn tại" });
+        }
 
-      console.log("Mật khẩu khớp:", passwordMatch); // Kiểm tra kết quả so sánh
+        console.log("✅ Kết quả truy vấn:", results);
+        const user = results[0];
 
-      if (passwordMatch) {
+        // 🛠 Kiểm tra mật khẩu
+        const passwordMatch = await bcrypt.compare(password, user.PasswordHash);
+        console.log("🔍 Kiểm tra mật khẩu:", passwordMatch);
+
+        if (!passwordMatch) {
+          console.warn("❌ Sai mật khẩu:", email);
+          return res.status(401).json({ message: "Sai mật khẩu" });
+        }
+
+        console.log("🎉 Đăng nhập thành công:", user.EmpID);
+
+        // ✅ Trả về thông tin user
         res.json({
           message: "Đăng nhập thành công",
           user: {
-            EmpID: user.EmpID, // Thêm thông tin EmpID
-            // Thêm các thông tin người dùng khác nếu cần
+            EmpID: user.EmpID,
+            email: email,
           },
         });
-      } else {
-        res.status(401).json({ message: "Email hoặc mật khẩu không đúng" });
       }
-    }
-  );
+    );
+  } catch (error) {
+    console.error("❌ Lỗi xử lý đăng nhập:", error);
+    res.status(500).json({ message: "Lỗi server" });
+  }
 });
 
 module.exports = router;

@@ -8,8 +8,8 @@
 }
 
 body {
-  background-color: #c9d6ff;
-  background: linear-gradient(to right, #e2e2e2, #c9d6ff);
+  background-color: #f0e6ef;
+  background: linear-gradient(to right, #ffdde1, #ee9ca7);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -40,14 +40,14 @@ body {
 }
 
 .container a {
-  color: #333;
+  color: #444;
   font-size: 13px;
   text-decoration: none;
   margin: 15px 0 10px;
 }
 
 .container button {
-  background-color: #512da8;
+  background-color: #ff6f61;
   color: #fff;
   font-size: 12px;
   padding: 10px 45px;
@@ -76,7 +76,7 @@ body {
 }
 
 .container input {
-  background-color: #eee;
+  background-color: #f7f7f7;
   border: none;
   margin: 8px 0;
   padding: 10px 15px;
@@ -84,6 +84,29 @@ body {
   border-radius: 8px;
   width: 100%;
   outline: none;
+}
+
+.password-container {
+  position: relative;
+  width: 100%;
+}
+
+.password-container input {
+  width: 100%;
+  padding-right: 40px;
+}
+
+.password-toggle {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: #777;
+}
+
+.password-toggle:hover {
+  color: #444;
 }
 
 .form-container {
@@ -163,9 +186,9 @@ body {
 }
 
 .toggle {
-  background-color: #512da8;
+  background-color: #ff6f61;
   height: 100%;
-  background: linear-gradient(to right, #5c6bc0, #512da8);
+  background: linear-gradient(to right, #ff6f61, #de6262);
   color: #fff;
   position: relative;
   left: -100%;
